@@ -38,6 +38,7 @@ If you want to use PostgreSQL instead, edit `.devcontainer/docker-compose.yml` a
 VSCode should automatically inquire you to install the required extensions, that can also be installed manually as follows:
 
 - Install Remote - Containers for VSCode
+
     - through command line `code --install-extension ms-vscode-remote.remote-containers`
     - clicking on the Install button in the Vistual Studio Marketplace: [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
     - View: Extensions command in VSCode (Windows: Ctrl+Shift+X; macOS: Cmd+Shift+X) then search for extension `ms-vscode-remote.remote-containers`
@@ -58,7 +59,7 @@ Notes:
 Run the following commands in the terminal inside the container. You might need to create a new terminal in VSCode.
 
 ```shell
-bench init --skip-redis-config-generation --frappe-branch version-12 frappe-bench
+bench init --skip-redis-config-generation --frappe-branch version-13 frappe-bench
 cd frappe-bench
 ```
 
@@ -85,7 +86,8 @@ Open the Procfile file and remove the three lines containing the configuration f
 code Procfile
 ```
 
-Or running the following command:
+Or running the following command:]
+
 ```shell
 sed -i '/redis/d' ./Procfile
 ```
@@ -97,6 +99,7 @@ You can create a new site with the following command:
 ```shell
 bench new-site sitename --no-mariadb-socket
 ```
+
 sitename MUST end with .localhost for trying deployments locally.
 
 for example:
@@ -152,18 +155,18 @@ To install custom app
 
 ```shell
 # --branch is optional, use it to point to branch on custom app repository
-bench get-app --branch version-12 myapp https://github.com/myusername/myapp.git
+bench get-app --branch version-13 myapp https://github.com/myusername/myapp.git
 bench --site mysite.localhost install-app myapp
 ```
 
-To install ERPNext (from the version-12 branch):
+To install ERPNext (from the version-13 branch):
 
 ```shell
-bench get-app --branch version-12 erpnext https://github.com/frappe/erpnext.git
+bench get-app --branch version-13 erpnext https://github.com/frappe/erpnext.git
 bench --site mysite.localhost install-app erpnext
 ```
 
-Note: Both frappe and erpnext must be on branch with same name. e.g. version-12
+Note: Both frappe and erpnext must be on branch with same name. e.g. version-13
 
 ### Start Frappe without debugging
 
@@ -249,7 +252,6 @@ Example shows the queries to be executed for site `localhost`
 
 Open sites/localhost/site_config.json:
 
-
 ```shell
 code sites/localhost/site_config.json
 ```
@@ -276,6 +278,7 @@ EXIT;
 In case you don't use VSCode, you may start the containers manually with the following command:
 
 ### Running the containers
+
 ```shell
 docker-compose -f .devcontainer/docker-compose.yml up -d
 ```
