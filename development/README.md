@@ -168,6 +168,15 @@ bench --site mysite.localhost install-app erpnext
 
 Note: Both frappe and erpnext must be on branch with same name. e.g. version-13
 
+------
+
+## Start bench
+
+to start development in frappe-bench. We have 2 option:
+
+- Start Frappe without debugging
+- Start Frappe with Visual Studio Code Python Debugging
+
 ### Start Frappe without debugging
 
 Execute following command from the `frappe-bench` directory.
@@ -178,7 +187,7 @@ bench start
 
 You can now login with user `Administrator` and the password you choose when creating the site.
 Your website will now be accessible at location [mysite.localhost:8000](http://mysite.localhost:8000)
-Note: To start bench with debugger refer section for debugging.
+**Note:** To start bench with debugger refer section for debugging.
 
 ### Start Frappe with Visual Studio Code Python Debugging
 
@@ -188,6 +197,8 @@ To enable Python debugging inside Visual Studio Code, you must first install the
 - Search `ms-python.python`
 - Click on `Install on Dev Container: Frappe Bench`
 - Click on 'Reload'
+
+**Note:** ms-python.python extension was already setup in devcontainer (launch.json file)
 
 We need to start bench separately through the VSCode debugger. For this reason, **instead** of running `bench start` you should run the following command inside the frappe-bench directory:
 
@@ -209,6 +220,8 @@ You can now login with user `Administrator` and the password you choose when cre
 
 To debug workers, skip starting worker with honcho and start it with VSCode debugger.
 
+------
+
 ## Developing using the interactive console
 
 You can launch a simple interactive shell console in the terminal with:
@@ -217,7 +230,7 @@ You can launch a simple interactive shell console in the terminal with:
 bench --site mysite.localhost console
 ```
 
-More likely, you may want to launch VSCode interactive console based on Jupyter kernel.
+More likely, you may want to launch VSCode interactive console based on *Jupyter kernel*.
 
 Launch VSCode command palette (cmd+shift+p or ctrl+shift+p), run the command `Python: Select interpreter to start Jupyter server` and select `/workspace/development/frappe-bench/env/bin/python`.
 
@@ -241,7 +254,9 @@ frappe.db.connect()
 
 The first command can take a few seconds to be executed, this is to be expected.
 
-### Fixing MariaDB issues after rebuilding the container
+-------
+
+## Fixing MariaDB issues after rebuilding the container
 
 For any reason after rebuilding the container if you are not be able to access MariaDB correctly with the previous configuration. Follow these instructions.
 
@@ -273,9 +288,13 @@ GRANT ALL PRIVILEGES ON `db_name`.* TO 'db_name'@'%'; FLUSH PRIVILEGES;
 EXIT;
 ```
 
+------
+
 ## Manually start containers
 
 In case you don't use VSCode, you may start the containers manually with the following command:
+
+------
 
 ### Running the containers
 
@@ -288,4 +307,5 @@ And enter the interactive shell for the development container with the following
 ```shell
 docker exec -e "TERM=xterm-256color" -w /workspace/development -it devcontainer_frappe_1 bash
 ```
- add some text for test 
+
+------
