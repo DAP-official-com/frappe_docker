@@ -307,5 +307,8 @@ And enter the interactive shell for the development container with the following
 ```shell
 docker exec -e "TERM=xterm-256color" -w /workspace/development -it devcontainer_frappe_1 bash
 ```
+<<<<<<< HEAD
 
 ------
+=======
+>>>>>>> 1c45de401e1d8104d786c1e0662b8e30f6de4cfb
