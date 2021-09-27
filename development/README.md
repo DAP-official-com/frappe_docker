@@ -15,14 +15,14 @@ It is recommended you allocate at least 4GB of RAM to docker:
 
 ## Bootstrap Containers for development
 
-Clone and change directory to frappe_docker directory
+To develop on Frappe-FrameWork we use frappe_docker as devcontainer to develop inside it. The source code is located inside `/frappe_docker/development/frappe-bench`. To get devcontainer using git clone command and change directory to frappe_docker directory
 
 ```shell
 git clone https://github.com/frappe/frappe_docker.git
 cd frappe_docker
 ```
 
-Copy example devcontainer config from `devcontainer-example` to `.devcontainer`
+To using pre-config devcontainer, Copy example devcontainer config from `devcontainer-example` to `.devcontainer` using shell command:
 
 ```shell
 cp -R devcontainer-example .devcontainer
