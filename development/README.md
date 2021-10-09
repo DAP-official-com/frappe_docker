@@ -245,11 +245,11 @@ Then, run the commmand `Python: Show Python interactive window` from the VSCode 
 Replace `mysite.localhost` with your site and run the following code in a Jupyter cell:
 
 ```python
-import frappe
-frappe.init(site='mysite.localhost', sites_path='/workspace/development/frappe-bench/sites')
-frappe.connect()
-frappe.local.lang = frappe.db.get_default('lang')
-frappe.db.connect()
+>>> import frappe
+>>> frappe.init(site='mysite.localhost', sites_path='/workspace/development/frappe-bench/sites')
+>>> frappe.connect()
+>>> frappe.local.lang = frappe.db.get_default('lang')
+>>> frappe.db.connect()
 ```
 
 The first command can take a few seconds to be executed, this is to be expected.
