@@ -307,5 +307,9 @@ And enter the interactive shell for the development container with the following
 ```shell
 docker exec -e "TERM=xterm-256color" -w /workspace/development -it devcontainer_frappe_1 bash
 ```
+<<<<<<< HEAD
 
 ------
+=======
+ add some text for test 
+>>>>>>> Add developer document
