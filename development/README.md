@@ -254,7 +254,7 @@ frappe.db.connect()
 
 The first command can take a few seconds to be executed, this is to be expected.
 
--------
+------
 
 ## Fixing MariaDB issues after rebuilding the container
 
