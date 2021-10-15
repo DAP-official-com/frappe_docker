@@ -310,6 +310,4 @@ docker exec -e "TERM=xterm-256color" -w /workspace/development -it devcontainer_
 <<<<<<< HEAD
 
 ------
-=======
- add some text for test 
->>>>>>> Add developer document
+
