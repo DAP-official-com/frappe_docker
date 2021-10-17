@@ -29,6 +29,7 @@ If you have applied for a commercial certificate, complete the HTTPS configurati
 
 {
 # -----HTTPS template start------------
+
 listen 443 ssl;
 ssl_certificate /data/cert/xxx.crt;
 ssl_certificate_key /data/cert/xxx.key;
@@ -38,6 +39,7 @@ ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
 ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;
 ssl_prefer_server_ciphers on;
 # -----HTTPS template end-----------
+
 }
 
 4. save file and [restart Nginx service.](https://support.websoft9.com/docs/erpnext/admin-services.html)
