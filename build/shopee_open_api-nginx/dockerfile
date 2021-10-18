@@ -1,0 +1,16 @@
+FROM bitnami/node:12-prod
+
+COPY build/shopee_open_api-nginx/install_app.sh /install_app
+
+RUN /install_app shopee_open_api https://github.com/DAP-official-com/shopee_open_api.git version-13
+
+FROM frappe/erpnext-nginx:edge
+
+COPY --from=0 /home/frappe/frappe-bench/sites/ /var/www/html/
+COPY --from=0 /rsync /rsync
+RUN echo -n "\n[custom]" >> /var/www/html/apps.txt
+
+VOLUME [ "/assets" ]
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["nginx", "-g", "daemon off;"]

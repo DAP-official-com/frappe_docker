@@ -1,0 +1,4 @@
+FROM frappe/erpnext-worker:edge
+
+RUN install_app shopee_open_api https://github.com/DAP-official-com/shopee_open_api.git version-13
+# Only add the branch if you are using a specific tag or branch.
