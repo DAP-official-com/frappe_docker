@@ -1,28 +1,38 @@
 # Building Test Cases
 
-In Fimax, the data structure has many dependencies and writing a Test Case individually will require presence of all dependencies. For example testing a leave application will require the presence of a test employee record etc.
+In Frappe, the data structure has many dependencies and writing a Test Case individually will require presence of all dependencies. For example testing a leave application will require the presence of a test employee record etc.
 
-It is not feasible to write test cases for a particular database, hence there must be a system that will automatically generate all the dependant records required.
+It is not feasible to write test cases for a particular database, hence there must be a system that will automatically generate all the dependant records required which is test_runner.py
 
-test_runner.py
-The webnotes/test_runner.py module facilitates this.
+## test_runner.py
 
-Get Missing Test Records
+The webnotes/test_runner.py module facilitates this by
+
+- Get Missing Test Records
 If you run the module directly via command line, and pass a DocType as an option, it will throw a list of all dependant records that are not setup and also give some more information of the DocType to help easy creation.
 
 For example, to see if there are any dependant records for "Leave Application" to be created, from the main folder run:
 
+```shell
 python lib/webnotes/test_runner.py -d "Leave Application"
+```
+
 This will throw out a list of any dependant records that need to be created.
 
-Create Test Records
-To add test records, in the python module of the DocType, just add a property test_records that will contain the list of records required for this DocType. Use the following naming convention:
+## Create Test Records
 
-For masters, use _Test and the DocType. For example _Test Department
-For naming_series, value _T- + DocType + -. For example _T-Employee- will be set automatically.
-For variants, go descriptive, example _Test Department with Block List
+To add test records, in the python module of the DocType, just add a property *test_records* that will contain the list of records required for this DocType. Use the following naming convention:
+
+- For masters, use _Test and the DocType. For example: 
+	_Test Department
+- For naming_series, value _T- + DocType + -. For example:
+	_T-Employee- will be set automatically.
+- For variants, go descriptive, example:
+	_Test Department with Block List
+
 Example of test record in Employee:
 
+```python
 test_records = [{
 	"doctype":"Employee",
 	"employee_name": "_Test Employee",
@@ -34,11 +44,15 @@ test_records = [{
 	"company": "_Test Company",
 	"user_id": "test@erpnext.com"
 }]
-Writing the Test Case
+```
+
+## Writing the Test Case
+
 In the test case, in the setup, just call the webnotes.test_runner.make_test_records method to automatically create all dependencies.
 
 Example:
 
+```Pyhon
 import sys
 import unittest
 
@@ -65,5 +79,4 @@ if __name__=="__main__":
 	import webnotes
 	webnotes.connect()
 	unittest.main()**
-
-    
+```

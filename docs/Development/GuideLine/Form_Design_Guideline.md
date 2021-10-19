@@ -1,5 +1,5 @@
-Form Design Guidelines
-Yefri Tavarez Nolasco edited this page on Jul 20, 2018 · 1 revision
+# Form Design Guidelines
+
 Please keep these rules in mind while designing forms
 
 1. Proximity

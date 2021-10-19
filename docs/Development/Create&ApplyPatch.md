@@ -31,20 +31,24 @@ frappe
     └── 4_0
         └── my_awesome_patch.py
 
-The patch can be added to patches.txt by adding a line like
+The patch can be added to *patches.txt* by adding a line like
 
 frappe.patches.4_0.my_awesome_patch The metadata ie. DocType available in the execute function will be the latest as per JSON files in the apps. However, you will not be able to access metadata of any previous states of the system.
 
-One off Python statements
+### One off Python statements
 
 You can also add one off python statements in patches.txt using the syntax, execute:{python statement}
 
 For example,
 
+```python
 execute:frappe.rename_doc("DocType", "Goods Shipment Note", "Delivery Note")
+```
 
-Note: All lines in patches.txt have to be unique. If you want to run a line twice, you can make it unique by adding a distinct comment.
+>Note: All lines in patches.txt have to be unique. If you want to run a line twice, you can make it unique by adding a distinct comment.
 
 For Example,
 
+```python
 execute:frappe.installer.make_site_dirs() #2014-02-19
+```

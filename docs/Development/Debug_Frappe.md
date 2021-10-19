@@ -1,43 +1,56 @@
 # Debug Frappe
 
-Yefri Tavarez Nolasco edited this page on Jul 20, 2018 · 1 revision
-This document lays down guidelines and best practices to debug performance issues in ERPNext. This is document is a wiki, so please keep adding as you discover more interesting approaches :)
+This document lays down guidelines and best practices to debug performance issues in ERPNext.
+This is document is a wiki, so please keep adding as you discover more interesting approaches :)
 
-Memory and CPU utilization
+## Memory and CPU utilization
+
+```shell
+# to check process and resource usage on machine
 htop
-First place to check is Memory and CPU. htop is a great utility for that
+```
 
-Check CPU load factor
-Check memory utilization / SWAP memory
+> Note:First place to check is Memory and CPU. htop is a great utility for that
+
+- Check CPU load factor
+- Check memory utilization / SWAP memory
+
 If memory is full or CPU load factor is more than the number of cores, then we can assume bottlenecks are in the database. If these are okay and even then the system seems sweating, then the bottleneck may be elsewhere
 
 Here is what a good htop should look like:
 
+## ngxtop
 
+An easy way to monitor the **Nginx** access log is the python lib ngxtop. You can install ngxtop with pip
 
-ngxtop
-An easy way to monitor the Nginx access log is the python lib ngxtop. You can install ngxtop with pip
-
+```shell
 pip install ngxtop
 ngxtop
-MariaDB settings
-innodb_buffer_pool_size
-The biggest impact is of innodb_buffer_pool_size
-Check the value by running select variables like "innodb_buffer%"
-Default 128M is very low. Expert opinion is that it should be 70-80% of total memory
-my.cnf
-Check for mysql settings at etc/my.cnf or etc/mysql/my.cnf
+```
 
-Slow Query Log
+## MariaDB settings
+
+- innodb_buffer_pool_size
+     The biggest impact is of innodb_buffer_pool_size
+     Check the value by running select variables like "innodb_buffer%"
+
+>Note: Default 128M is very low. Expert opinion is that it should be 70-80% of total memory
+
+To check mariaDB buffer size go to Check mysql settings at `etc/my.cnf` or `etc/mysql/my.cnf`
+
+## Slow Query Log
+
 Enable slow query log to start logging queries that take a long time
 
-Profiling
+## Profiling
+
 An easy way of identifying bottlenecks is profiling. You can profile a slow transaction by trying to execute that transaction in the frappe console. You can use the frappe API to quickly copy an existing doc and editing it
 
-Hint: %prun [statement] will automatically profile in ipython.
+> Hint: %prun [statement] will automatically profile in ipython.
 
 Here is a quick example of debugging a slow Stock Entry.
 
+```
 frappe@XXXXX:~/frappe-bench$ bench --site xxxxxxxx console
 
 Python 2.7.12 (default, Nov 19 2016, 06:48:10)
@@ -89,14 +102,18 @@ In [4]: %prun st1.insert()
      3578    0.007    0.000    0.012    0.000 data.py:734(compare)
       140    0.007    0.000    0.007    0.000 {method 'recv' of '_socket.socket' objects}
      3578    0.007    0.000    0.019    0.000 __init__.py:1022(compare)
+```
 
-If the process does not seem to complete, after a few seconds, hit Ctrl+C. The function where this breaks, will give you a clue what is the bottleneck method.
+If the process does not seem to complete, after a few seconds, hit `Ctrl+C`. 
+The function where this breaks, will give you a clue what is the bottleneck method.
 
-Mariadb SHOW PROCESSLIST
-When a process feels "stuck", to understand what goes on in the database, enter the mariadb console and run SHOW PROCESSLIST
+## Mariadb SHOW PROCESSLIST
 
-Tip: Keep your python and mysql consoles on separate terminal tabs
+When a process feels "stuck", to understand what goes on in the database, enter the mariadb console and run `SHOW PROCESSLIST`
 
+> Tip: Keep your python and mysql consoles on separate terminal tabs
+
+```
 $ bench --site xxxxxx mariadb
 > show processlist;
 ***************************[ 1. row ]***************************
@@ -108,15 +125,19 @@ Command  | Query
 Time     | 2
 State    | Copying to tmp table
 Info     | select batch_id, sum(actual_qty) as qty from `tabBatch` join `tabStock Ledger Entry` on `tabBatch`.b
+```
+
 This shows the query that is slowing down the operation.
 
-Indexing
+## Indexing
+
 Once you identify a bottleneck, you can do a full code search / grep in the repository to find where the query is.
 
-Then you can go to the mariadb console and run EXPLAIN command to see what is holding the query up
+Then you can go to the mariadb console and run `EXPLAIN` command to see what is holding the query up
 
 Example:
 
+```
 xxxxxx> EXPLAIN select batch_id, sum(actual_qty) as qty from `tabBatch` join `tabStock Ledger Entry`
               -> on `tabBatch`.batch_id = `tabStock Ledger Entry`.batch_no where `tabStock Ledger Entry`.item_
               -> code = "YYYY" and  `tabStock Ledger Entry`.warehouse = "XXXXX" and (`tabBatch`.expiry_d
@@ -147,9 +168,12 @@ Extra         | Using where; Using join buffer (flat, BNL join)
 Once you figure out the query, it should be interesting to fix this by adding an index
 
 alter table `tabStock Ledger Entry` add index batch_item_warehouse (batch_no, item_code, warehouse);
+```
+
 You can then run the query again and see the impact!
 
-Gunicorn Workers
+## Gunicorn Workers
+
 ERPNext uses Gunicorn HTTP server in production mode.
 
 For optimal performance the number of Gunicorn workers needs to be set according to the number of CPU cores your serve has.
