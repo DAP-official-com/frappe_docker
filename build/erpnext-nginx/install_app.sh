@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Define default argument for erpnext application installation
 APP_NAME=${1}
 APP_REPO=${2}
 APP_BRANCH=${3}
@@ -7,15 +8,18 @@ FRAPPE_BRANCH=${4}
 
 [ "${APP_BRANCH}" ] && BRANCH="-b ${APP_BRANCH}"
 
+# make app asset directory in site directory for store Erpnext asset and add new-line in apps.txt
 mkdir -p /home/frappe/frappe-bench/sites/assets
 cd /home/frappe/frappe-bench
 echo -ne "frappe\n${APP_NAME}" >/home/frappe/frappe-bench/sites/apps.txt
 
+# make Erpnext app directory in apps directory and get-app from git repo
 mkdir -p apps
 cd apps
 git clone --depth 1 https://github.com/frappe/frappe -b ${FRAPPE_BRANCH}
 git clone --depth 1 ${APP_REPO} ${BRANCH} ${APP_NAME}
 
+# install node dependency 
 echo "Install frappe NodeJS dependencies . . ."
 cd /home/frappe/frappe-bench/apps/frappe
 yarn

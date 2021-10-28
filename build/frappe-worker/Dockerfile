@@ -64,7 +64,7 @@ RUN bash install.sh \
 # Create frappe-bench directories
 RUN mkdir -p apps logs commands sites /home/frappe/backups
 
-# Setup python environment
+# Setup python environment and install Frappe app
 RUN python -m venv env \
     && . env/bin/activate \
     && pip3 install --upgrade pip \

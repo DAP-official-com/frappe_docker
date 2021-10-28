@@ -1,6 +1,7 @@
 # Frappe Bench Dockerfile
+# Install bench pre-request 
 FROM debian:buster-slim
-
+# define default argument git repo and branch for bench
 ARG GIT_REPO=https://github.com/frappe/bench.git
 ARG GIT_BRANCH=develop
 

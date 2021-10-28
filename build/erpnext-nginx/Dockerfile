@@ -8,6 +8,7 @@ ARG GIT_REPO=https://github.com/frappe/erpnext
 ARG GIT_BRANCH=develop
 ARG FRAPPE_BRANCH=${GIT_BRANCH}
 
+# Copy install.sh in build directory and update linux package
 COPY build/erpnext-nginx/install_app.sh /install_app
 RUN chmod +x /install_app && \
   apt-get update -y && \
@@ -15,6 +16,7 @@ RUN chmod +x /install_app && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
+# Run install with environment argument
 RUN /install_app erpnext ${GIT_REPO} ${GIT_BRANCH} ${FRAPPE_BRANCH}
 
 FROM ${DOCKER_REGISTRY_PREFIX}/frappe-nginx:${IMAGE_TAG}
@@ -23,6 +25,7 @@ COPY --from=0 /home/frappe/frappe-bench/sites/ /var/www/html/
 COPY --from=0 /rsync /rsync
 RUN echo "erpnext" >> /var/www/html/apps.txt
 
+# mount asset directory to container
 VOLUME [ "/assets" ]
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
