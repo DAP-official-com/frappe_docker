@@ -62,6 +62,10 @@ It takes care of complete setup to develop with Frappe/ERPNext and Bench, Includ
 
 [Start development](development).
 
+## Developer guild
+
+- Administrative
+
 ## Contributing
 
 - [Frappe Docker Images](CONTRIBUTING.md)
