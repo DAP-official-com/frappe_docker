@@ -1,4 +1,4 @@
 FROM frappe/erpnext-worker:edge
 
-RUN install_app shopee_open_api https://git.arterypartner.com/artery/ap-application/shopee_open_api.git version-13
+RUN install_app shopee_open_api git@git.arterypartner.com:artery/ap-application/frappe_docker.git version-13
 # Only add the branch if you are using a specific tag or branch.

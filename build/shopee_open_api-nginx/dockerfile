@@ -4,8 +4,8 @@ ARG IMAGE_TAG=develop
 
 FROM node:${NODE_IMAGE_TAG}
 
-ARG GIT_REPO=https://github.com/frappe/erpnext
-ARG GIT_BRANCH=develop
+ARG GIT_REPO=git@git.arterypartner.com:artery/ap-application/shopee_open_api.git
+ARG GIT_BRANCH=version-13
 ARG FRAPPE_BRANCH=${GIT_BRANCH}
 
 COPY build/shopee_open_api-nginx/install_app.sh /install_app
@@ -14,7 +14,7 @@ RUN chmod +x /install_app && \
   apt-get install build-essential git python2 -y && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
-RUN /install_app shopee_open_api https://git.arterypartner.com/artery/ap-application/shopee_open_api.git version-13 version-13
+RUN /install_app shopee_open_api git@git.arterypartner.com:artery/ap-application/shopee_open_api.git version-13 version-13
 
 FROM frappe/erpnext-nginx:edge
 
