@@ -93,7 +93,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push
-        uses: docker/bake-action@v1.6.0
+        uses: docker/bake-action@v2.1.0
         with:
           files: docker-bake.hcl
           targets: frappe-bench
@@ -127,7 +127,7 @@ jobs:
           VERSION: ${{ matrix.version }}
 
       - name: Build Frappe images
-        uses: docker/bake-action@v1.6.0
+        uses: docker/bake-action@v2.1.0
         with:
           files: docker-bake.hcl
           targets: ${{ format('{0}-{1}', 'frappe', needs.resolve-matrix.outputs.build-target )}}
@@ -146,7 +146,7 @@ jobs:
           VERSION: ${{ matrix.version }}
 
       - name: Build ERPNext images
-        uses: docker/bake-action@v1.6.0
+        uses: docker/bake-action@v2.1.0
         with:
           files: docker-bake.hcl
           targets: ${{ format('{0}-{1}', 'erpnext', needs.resolve-matrix.outputs.build-target )}}
@@ -164,7 +164,7 @@ jobs:
 
       - name: Push Frappe images
         if: github.event_name != 'pull_request'
-        uses: docker/bake-action@v1.6.0
+        uses: docker/bake-action@v2.1.0
         with:
           files: docker-bake.hcl
           targets: ${{ format('{0}-{1}', 'frappe', needs.resolve-matrix.outputs.build-target )}}
@@ -172,7 +172,7 @@ jobs:
 
       - name: Push ERPNext images
         if: github.event_name != 'pull_request'
-        uses: docker/bake-action@v1.6.0
+        uses: docker/bake-action@v2.1.0
         with:
           files: docker-bake.hcl
           targets: ${{ format('{0}-{1}', 'erpnext', needs.resolve-matrix.outputs.build-target )}}
